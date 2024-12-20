@@ -23,6 +23,17 @@ pub mod notesols {
     }
 
     //Reading doesn't need any instruction, is fetching on chain data
+
+    pub fn update_note_entry(
+        ctx: Context<UpdateNote>,
+        _title: String,
+        message: String,
+    ) -> Result<()> {
+        let note_entry = &mut ctx.accounts.note_entry;
+        note_entry.owner = ctx.accounts.owner.key();
+        note_entry.message = message;
+        Ok(())
+    }
 }
 
 //Structure for each notes entry
@@ -46,6 +57,25 @@ pub struct CreateNote<'info> {
     bump,
     payer=owner,
     space=ANCHOR_DISCRIMINATOR+NoteEntryState::INIT_SPACE,
+  )]
+    pub note_entry: Account<'info, NoteEntryState>,
+
+    #[account(mut)]
+    pub owner: Signer<'info>,
+
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+#[instruction(title:String)]
+pub struct UpdateNote<'info> {
+    #[account(
+    mut,
+    seeds=[title.as_bytes(),owner.key().as_ref()],
+    bump,
+    realloc=ANCHOR_DISCRIMINATOR+NoteEntryState::INIT_SPACE,
+    realloc::zero=true,
+    realloc::payer=owner,
   )]
     pub note_entry: Account<'info, NoteEntryState>,
 
