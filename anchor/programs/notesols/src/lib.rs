@@ -65,7 +65,7 @@ pub struct CreateNote<'info> {
     bump,
     payer=owner,
     space=ANCHOR_DISCRIMINATOR+NoteEntryState::INIT_SPACE,
-  )]
+    )]
     pub note_entry: Account<'info, NoteEntryState>,
 
     #[account(mut)]
@@ -84,7 +84,7 @@ pub struct UpdateNote<'info> {
     realloc=ANCHOR_DISCRIMINATOR+NoteEntryState::INIT_SPACE,
     realloc::zero=true,
     realloc::payer=owner,
-  )]
+    )]
     pub note_entry: Account<'info, NoteEntryState>,
 
     #[account(mut)]
@@ -101,7 +101,7 @@ pub struct DeleteNote<'info> {
     seeds=[title.as_bytes(),owner.key().as_ref()],
     bump,
     close=owner,
-  )]
+    )]
     pub note_entry: Account<'info, NoteEntryState>,
 
     #[account(mut)]

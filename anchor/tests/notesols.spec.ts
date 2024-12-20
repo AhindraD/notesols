@@ -1,76 +1,50 @@
 import * as anchor from '@coral-xyz/anchor'
-import {Program} from '@coral-xyz/anchor'
-import {Keypair} from '@solana/web3.js'
-import {Notesols} from '../target/types/notesols'
+import { Program } from '@coral-xyz/anchor'
+import { Keypair, PublicKey, SystemProgram } from '@solana/web3.js'
+import { Notesols } from '../target/types/notesols'
 
-describe('notesols', () => {
+async function airdrop(connection: any, address: any, amount = 1000000000) {
+  await connection.confirmTransaction(await connection.requestAirdrop(address, amount), "confirmed");
+}
+function getNotePDA(title: string, author: PublicKey, programID: PublicKey) {
+  return PublicKey.findProgramAddressSync(
+    [
+      anchor.utils.bytes.utf8.encode(title),
+      author.toBuffer()
+    ], programID);
+}
+
+
+describe('notesols', async () => {
   // Configure the client to use the local cluster.
-  const provider = anchor.AnchorProvider.env()
-  anchor.setProvider(provider)
-  const payer = provider.wallet as anchor.Wallet
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
+  const payer = provider.wallet as anchor.Wallet;
 
-  const program = anchor.workspace.Notesols as Program<Notesols>
+  const program = anchor.workspace.Notesols as Program<Notesols>;
 
-  const notesolsKeypair = Keypair.generate()
+  const notesolsKeypair = Keypair.generate();
 
-  it('Initialize Notesols', async () => {
+  it("Create a Note", async () => {
+    let title: string = "Test Note";
+    let message: string = "This is a test message.";
+    await airdrop(provider.connection, notesolsKeypair.publicKey);
+    const [note_pda, note_bump] = getNotePDA(title, notesolsKeypair.publicKey, program.programId);
+
     await program.methods
-      .initialize()
+      .createNoteEntry(title, message)
       .accounts({
-        notesols: notesolsKeypair.publicKey,
-        payer: payer.publicKey,
+        noteEntry: note_pda,
+        owner: notesolsKeypair.publicKey,
+        systemProgram: SystemProgram.programId,
       })
       .signers([notesolsKeypair])
-      .rpc()
+      .rpc({ commitment: "confirmed" });
 
-    const currentCount = await program.account.notesols.fetch(notesolsKeypair.publicKey)
+    const note = await program.account.noteEntryState.fetch(note_pda);
 
-    expect(currentCount.count).toEqual(0)
-  })
-
-  it('Increment Notesols', async () => {
-    await program.methods.increment().accounts({ notesols: notesolsKeypair.publicKey }).rpc()
-
-    const currentCount = await program.account.notesols.fetch(notesolsKeypair.publicKey)
-
-    expect(currentCount.count).toEqual(1)
-  })
-
-  it('Increment Notesols Again', async () => {
-    await program.methods.increment().accounts({ notesols: notesolsKeypair.publicKey }).rpc()
-
-    const currentCount = await program.account.notesols.fetch(notesolsKeypair.publicKey)
-
-    expect(currentCount.count).toEqual(2)
-  })
-
-  it('Decrement Notesols', async () => {
-    await program.methods.decrement().accounts({ notesols: notesolsKeypair.publicKey }).rpc()
-
-    const currentCount = await program.account.notesols.fetch(notesolsKeypair.publicKey)
-
-    expect(currentCount.count).toEqual(1)
-  })
-
-  it('Set notesols value', async () => {
-    await program.methods.set(42).accounts({ notesols: notesolsKeypair.publicKey }).rpc()
-
-    const currentCount = await program.account.notesols.fetch(notesolsKeypair.publicKey)
-
-    expect(currentCount.count).toEqual(42)
-  })
-
-  it('Set close the notesols account', async () => {
-    await program.methods
-      .close()
-      .accounts({
-        payer: payer.publicKey,
-        notesols: notesolsKeypair.publicKey,
-      })
-      .rpc()
-
-    // The account should no longer exist, returning null.
-    const userAccount = await program.account.notesols.fetchNullable(notesolsKeypair.publicKey)
-    expect(userAccount).toBeNull()
+    expect(note.title).toEqual(title);
+    expect(note.message).toEqual(message);
+    expect(note.owner).toEqual(notesolsKeypair.publicKey);
   })
 })
