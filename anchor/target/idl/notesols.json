@@ -8,90 +8,36 @@
   },
   "instructions": [
     {
-      "name": "close",
+      "name": "create_note_entry",
       "discriminator": [
-        98,
-        165,
-        201,
-        177,
-        108,
-        65,
+        142,
+        221,
         206,
-        96
-      ],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "notesols",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "decrement",
-      "discriminator": [
-        106,
-        227,
-        168,
-        59,
-        248,
-        27,
-        150,
-        101
-      ],
-      "accounts": [
-        {
-          "name": "notesols",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "increment",
-      "discriminator": [
-        11,
-        18,
-        104,
-        9,
-        104,
-        174,
-        59,
-        33
-      ],
-      "accounts": [
-        {
-          "name": "notesols",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "initialize",
-      "discriminator": [
-        175,
-        175,
-        109,
-        31,
-        13,
-        152,
         155,
-        237
+        128,
+        20,
+        12,
+        155
       ],
       "accounts": [
         {
-          "name": "payer",
+          "name": "note_entry",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
-          "name": "notesols",
+          "name": "owner",
           "writable": true,
           "signer": true
         },
@@ -100,58 +46,146 @@
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
     },
     {
-      "name": "set",
+      "name": "delete_note_entry",
       "discriminator": [
-        198,
-        51,
-        53,
-        241,
-        116,
-        29,
-        126,
-        194
+        229,
+        152,
+        205,
+        59,
+        87,
+        176,
+        76,
+        66
       ],
       "accounts": [
         {
-          "name": "notesols",
-          "writable": true
+          "name": "note_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "value",
-          "type": "u8"
+          "name": "title",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "update_note_entry",
+      "discriminator": [
+        68,
+        117,
+        115,
+        5,
+        206,
+        44,
+        172,
+        103
+      ],
+      "accounts": [
+        {
+          "name": "note_entry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
         }
       ]
     }
   ],
   "accounts": [
     {
-      "name": "Notesols",
+      "name": "NoteEntryState",
       "discriminator": [
-        255,
-        176,
+        91,
         4,
-        245,
-        188,
-        253,
-        124,
+        30,
+        244,
+        225,
+        190,
+        122,
         25
       ]
     }
   ],
   "types": [
     {
-      "name": "Notesols",
+      "name": "NoteEntryState",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "count",
-            "type": "u8"
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "type": "string"
           }
         ]
       }

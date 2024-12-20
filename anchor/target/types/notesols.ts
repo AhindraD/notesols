@@ -14,90 +14,36 @@ export type Notesols = {
   },
   "instructions": [
     {
-      "name": "close",
+      "name": "createNoteEntry",
       "discriminator": [
-        98,
-        165,
-        201,
-        177,
-        108,
-        65,
+        142,
+        221,
         206,
-        96
-      ],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "notesols",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "decrement",
-      "discriminator": [
-        106,
-        227,
-        168,
-        59,
-        248,
-        27,
-        150,
-        101
-      ],
-      "accounts": [
-        {
-          "name": "notesols",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "increment",
-      "discriminator": [
-        11,
-        18,
-        104,
-        9,
-        104,
-        174,
-        59,
-        33
-      ],
-      "accounts": [
-        {
-          "name": "notesols",
-          "writable": true
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "initialize",
-      "discriminator": [
-        175,
-        175,
-        109,
-        31,
-        13,
-        152,
         155,
-        237
+        128,
+        20,
+        12,
+        155
       ],
       "accounts": [
         {
-          "name": "payer",
+          "name": "noteEntry",
           "writable": true,
-          "signer": true
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
-          "name": "notesols",
+          "name": "owner",
           "writable": true,
           "signer": true
         },
@@ -106,58 +52,146 @@ export type Notesols = {
           "address": "11111111111111111111111111111111"
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ]
     },
     {
-      "name": "set",
+      "name": "deleteNoteEntry",
       "discriminator": [
-        198,
-        51,
-        53,
-        241,
-        116,
-        29,
-        126,
-        194
+        229,
+        152,
+        205,
+        59,
+        87,
+        176,
+        76,
+        66
       ],
       "accounts": [
         {
-          "name": "notesols",
-          "writable": true
+          "name": "noteEntry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "value",
-          "type": "u8"
+          "name": "title",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "updateNoteEntry",
+      "discriminator": [
+        68,
+        117,
+        115,
+        5,
+        206,
+        44,
+        172,
+        103
+      ],
+      "accounts": [
+        {
+          "name": "noteEntry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "arg",
+                "path": "title"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "type": "string"
         }
       ]
     }
   ],
   "accounts": [
     {
-      "name": "notesols",
+      "name": "noteEntryState",
       "discriminator": [
-        255,
-        176,
+        91,
         4,
-        245,
-        188,
-        253,
-        124,
+        30,
+        244,
+        225,
+        190,
+        122,
         25
       ]
     }
   ],
   "types": [
     {
-      "name": "notesols",
+      "name": "noteEntryState",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "count",
-            "type": "u8"
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "type": "string"
           }
         ]
       }
