@@ -1,8 +1,8 @@
-![web3]()
+![image](https://github.com/user-attachments/assets/a5de9682-a29e-433c-b654-853a1f55c16f)
 
 # NoteSols - Decentralized Note Taker
-Store you notes on chain! Take the first step towards a decentralized world.
-NoteSols is a decentralized note taker that allows users to create, read, update, and delete notes. It is built using the Anchor framework and the Solana blockchain Devnet.
+### Store you notes on chain! Take the first step towards a decentralized world.
+### NoteSols is a decentralized note taker that allows users to create, read, update, and delete notes. It is built using the Anchor framework and the Solana blockchain Devnet.
 
 ## NoteSols Program Address - DEVNET
 
