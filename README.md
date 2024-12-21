@@ -1,8 +1,8 @@
 ![image](https://github.com/user-attachments/assets/a5de9682-a29e-433c-b654-853a1f55c16f)
 
 # NoteSols - Decentralized Note Taker
-### Store you notes on chain! Take the first step towards a decentralized world.
-### NoteSols is a decentralized note taker that allows users to create, read, update, and delete notes. It is built using the Anchor framework and the Solana blockchain Devnet.
+### Store your notes on the chain! Take the first step towards a decentralized world.
+### NoteSols is a decentralized note-taker that allows users to create, read, update, and delete notes. It is built using the Anchor framework and the Solana blockchain Devnet.
 
 - ## NoteSols Program Address - DEVNET
 
@@ -25,7 +25,7 @@
 For this Task you need:
 
 - [Rust installed](https://www.rust-lang.org/tools/install)
-  - Make sure to use stable version:
+  - Make sure to use a stable version:
   ```bash
   rustup default stable
   ```
@@ -59,7 +59,7 @@ For this Task you need:
 git clone https://github.com/AhindraD/notesols
 ```
 
-2. Change directory to the notesols folder of the cloned repository:
+2. Change the directory to the "notesols" folder of the cloned repository:
 
 ```bash
 cd notesols
@@ -71,7 +71,7 @@ cd notesols
 npm install
 ```
 
-4. Change directory to the anchor folder:
+4. Change the directory to the anchor folder:
 
 ```bash
 cd anchor
@@ -99,7 +99,7 @@ anchor build
 
 Or,
 
-2. Run the development server at root directory:
+2. Run the development server at the root directory:
 
 ```bash
 npm run dev
