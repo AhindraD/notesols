@@ -10,6 +10,13 @@ https://explorer.solana.com/address/7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh
 
 ## Frontend Deployed: https://notesols-dapp.vercel.app/notesols
 
+## Snapshots:
+<img src="https://github.com/user-attachments/assets/895f7dc7-096d-44e2-a350-75976a5b9c26" alt="notes_snap" width="400"/>
+<img src="https://github.com/user-attachments/assets/de19e316-3dd5-40d2-b2eb-1b1216de0ca7" alt="connect-wallet" width="400"/>
+<img src="https://github.com/user-attachments/assets/65b0aae2-0ce8-45c2-8e74-6fc010a2eaa6" alt="account_details" width="400"/>
+<img src="https://github.com/user-attachments/assets/5712ddd5-cc75-42e2-8f71-ad2550ff2d76" alt="cluster_selection" width="400"/>
+
+
 ## Project Setup
 
 ### Environment Setup
