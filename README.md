@@ -4,11 +4,12 @@
 ### Store you notes on chain! Take the first step towards a decentralized world.
 ### NoteSols is a decentralized note taker that allows users to create, read, update, and delete notes. It is built using the Anchor framework and the Solana blockchain Devnet.
 
-## NoteSols Program Address - DEVNET
+- ## NoteSols Program Address - DEVNET
 
-https://explorer.solana.com/address/7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh?cluster=devnet
+    https://explorer.solana.com/address/7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh?cluster=devnet
 
-## Frontend Deployed: https://notesols-dapp.vercel.app/notesols
+- ## Frontend Deployed: 
+    ## https://notesols-dapp.vercel.app/notesols
 
 ## Snapshots:
 <img src="https://github.com/user-attachments/assets/895f7dc7-096d-44e2-a350-75976a5b9c26" alt="notes_snap" width="400"/>
