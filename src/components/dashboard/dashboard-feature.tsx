@@ -13,7 +13,7 @@ const links: { label: string; href: string }[] = [
 export default function DashboardFeature() {
   return (
     <div>
-      <AppHero title="Notesols" subtitle="Click the button link below to get started!" />
+      <AppHero title="Notesols" subtitle="Write and edit your notes on-chain! Click the button below to get started." />
       <div className="max-w-xl mx-auto py-6 sm:px-6 lg:px-8 text-center">
         <button className="btn btn-primary">
           <Link href="/notesols">{"Notesols dApp"}</Link>
