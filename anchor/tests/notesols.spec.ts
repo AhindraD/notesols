@@ -15,7 +15,7 @@ function getNotePDA(title: string, author: PublicKey, programID: PublicKey) {
 }
 
 
-describe('notesols', async () => {
+describe('notesols', () => {
   // Configure the client to use the local cluster.
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
@@ -33,7 +33,7 @@ describe('notesols', async () => {
 
     await program.methods
       .createNoteEntry(title, message)
-      .accounts({
+      .accountsPartial({
         noteEntry: note_pda,
         owner: notesolsKeypair.publicKey,
         systemProgram: SystemProgram.programId,
@@ -46,5 +46,51 @@ describe('notesols', async () => {
     expect(note.title).toEqual(title);
     expect(note.message).toEqual(message);
     expect(note.owner).toEqual(notesolsKeypair.publicKey);
+  })
+
+
+  it("Update a Note", async () => {
+    let title: string = "Test Note";
+    let updated_message: string = "Updated message.";
+    await airdrop(provider.connection, notesolsKeypair.publicKey);
+    const [note_pda, note_bump] = getNotePDA(title, notesolsKeypair.publicKey, program.programId);
+
+    await program.methods
+      .updateNoteEntry(title, updated_message)
+      .accountsPartial({
+        noteEntry: note_pda,
+        owner: notesolsKeypair.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([notesolsKeypair])
+      .rpc({ commitment: "confirmed" });
+
+    const note = await program.account.noteEntryState.fetch(note_pda);
+
+    expect(note.title).toEqual(title);
+    expect(note.message).toEqual(updated_message);
+    expect(note.owner).toEqual(notesolsKeypair.publicKey);
+  })
+
+  it("Delete a Note", async () => {
+    let title: string = "Test Note";
+    await airdrop(provider.connection, notesolsKeypair.publicKey);
+    const [note_pda, note_bump] = getNotePDA(title, notesolsKeypair.publicKey, program.programId);
+
+    await program.methods
+      .deleteNoteEntry(title)
+      .accountsPartial({
+        noteEntry: note_pda,
+        owner: notesolsKeypair.publicKey,
+        systemProgram: SystemProgram.programId,
+      })
+      .signers([notesolsKeypair])
+      .rpc({ commitment: "confirmed" });
+
+    try {
+      await program.account.noteEntryState.fetch(note_pda);
+    } catch (error) {
+      expect(error);
+    }
   })
 })
