@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/notesols.json`.
  */
 export type Notesols = {
-  "address": "487rEoTBR3WViCqXKCWYSxh2d8LgnSpZkDcz3TJwdvco",
+  "address": "7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh",
   "metadata": {
     "name": "notesols",
     "version": "0.1.0",

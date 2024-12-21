@@ -6,11 +6,11 @@ solana_version = "1.18.18"
 resolution = true
 skip-lint = false
 
-[programs.devnet]
-notesols = "487rEoTBR3WViCqXKCWYSxh2d8LgnSpZkDcz3TJwdvco"
+# [programs.devnet]
+# notesols = "7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh"
 
 [programs.localnet]
-notesols = "487rEoTBR3WViCqXKCWYSxh2d8LgnSpZkDcz3TJwdvco"
+notesols = "7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh"
 
 [registry]
 url = "https://api.apr.dev"
