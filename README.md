@@ -1,94 +1,100 @@
-# notesols
+![web3]()
 
-## Getting Started
+# NoteSols - Decentralized Note Taker
+Store you notes on chain! Take the first step towards a decentralized world.
+NoteSols is a decentralized note taker that allows users to create, read, update, and delete notes. It is built using the Anchor framework and the Solana blockchain Devnet.
 
-### Prerequisites
+## NoteSols Program Address - DEVNET
 
-- Node v18.18.0 or higher
+https://explorer.solana.com/address/7MZAQw52ZgKMzVhE8VZdZCxxcR9XQfdCcmQSEmu93xjh?cluster=devnet
 
-- Rust v1.77.2 or higher
-- Anchor CLI 0.30.1 or higher
-- Solana CLI 1.18.17 or higher
+## Frontend Deployed: https://notesols-dapp.vercel.app/notesols
 
-### Installation
+## Project Setup
 
-#### Clone the repo
+### Environment Setup
 
-```shell
-git clone <repo-url>
-cd <repo-name>
+For this Task you need:
+
+- [Rust installed](https://www.rust-lang.org/tools/install)
+  - Make sure to use stable version:
+  ```bash
+  rustup default stable
+  ```
+- [Solana installed](https://docs.solana.com/cli/install-solana-cli-tools)
+
+  - Use v1.18.18
+  - After you have Solana-CLI installed, you can switch between versions using:
+
+  ```bash
+  solana-install init 1.18.18
+  ```
+
+- [Anchor installed](https://www.anchor-lang.com/docs/installation)
+
+  - Use v0.30.1
+  - After you have Anchor installed, you can switch between versions using:
+
+  ```bash
+  avm use 0.30.1
+  ```
+
+  <br>
+  <br>
+  <br>
+
+### 01. Anchor Program with Tests
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/AhindraD/notesols
 ```
 
-#### Install Dependencies
+2. Change directory to the notesols folder of the cloned repository:
 
-```shell
-pnpm install
+```bash
+cd notesols
 ```
 
-#### Start the web app
+3. Install dependencies:
 
-```
-pnpm dev
-```
-
-## Apps
-
-### anchor
-
-This is a Solana program written in Rust using the Anchor framework.
-
-#### Commands
-
-You can use any normal anchor commands. Either move to the `anchor` directory and run the `anchor` command or prefix the command with `pnpm`, eg: `pnpm anchor`.
-
-#### Sync the program id:
-
-Running this command will create a new keypair in the `anchor/target/deploy` directory and save the address to the Anchor config file and update the `declare_id!` macro in the `./src/lib.rs` file of the program.
-
-You will manually need to update the constant in `anchor/lib/counter-exports.ts` to match the new program id.
-
-```shell
-pnpm anchor keys sync
+```bash
+npm install
 ```
 
-#### Build the program:
+4. Change directory to the anchor folder:
 
-```shell
-pnpm anchor-build
+```bash
+cd anchor
 ```
 
-#### Start the test validator with the program deployed:
+5. Build the program:
 
-```shell
-pnpm anchor-localnet
+```bash
+anchor build
 ```
 
-#### Run the tests
+6. Test the program:
 
-```shell
-pnpm anchor-test
+```bash
+ anchor test
 ```
 
-#### Deploy to Devnet
+  <br>
+  <br>
+  <br>
 
-```shell
-pnpm anchor deploy --provider.cluster devnet
+### 02. Web App - Frontend
+
+1. Go to the deployed frontend at https://notesols-dapp.vercel.app/notesols
+
+Or,
+
+2. Run the development server at root directory:
+
+```bash
+npm run dev
 ```
 
-### web
-
-This is a React app that uses the Anchor generated client to interact with the Solana program.
-
-#### Commands
-
-Start the web app
-
-```shell
-pnpm dev
-```
-
-Build the web app
-
-```shell
-pnpm build
-```
+5. Open http://localhost:3000/notesols in your browser to see the result, and ineteract with the program.
