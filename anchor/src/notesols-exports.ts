@@ -21,7 +21,7 @@ export function getNotesolsProgramId(cluster: Cluster) {
     case 'devnet':
     case 'testnet':
       // This is the program ID for the Notesols program on devnet and testnet.
-      return new PublicKey('coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF')
+      return new PublicKey('487rEoTBR3WViCqXKCWYSxh2d8LgnSpZkDcz3TJwdvco')
     case 'mainnet-beta':
     default:
       return NOTESOLS_PROGRAM_ID

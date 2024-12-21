@@ -6,15 +6,17 @@ solana_version = "1.18.18"
 resolution = true
 skip-lint = false
 
+[programs.devnet]
+notesols = "487rEoTBR3WViCqXKCWYSxh2d8LgnSpZkDcz3TJwdvco"
+
 [programs.localnet]
-notesols = "coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF"
+notesols = "487rEoTBR3WViCqXKCWYSxh2d8LgnSpZkDcz3TJwdvco"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "Localnet"
-# wallet = "~/.config/solana/id.json"
 wallet = "./wallet.json"
 
 [scripts]
