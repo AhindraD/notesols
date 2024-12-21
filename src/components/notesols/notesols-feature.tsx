@@ -12,14 +12,14 @@ export default function NotesolsFeature() {
   const { programId } = useNotesolsProgram()
 
   return publicKey ? (
-    <div>
+    <div className='py-6'>
       <AppHero
         title="Notesols"
         subtitle={
-          'Create a new account by clicking the "Create" button. The state of a account is stored on-chain and can be manipulated by calling the program\'s methods (increment, decrement, set, and close).'
+          'Create a note, also update message and delete it at any time. The note is stored on-chain.'
         }
       >
-        <p className="mb-6">
+        <p className="mb-2">
           <ExplorerLink path={`account/${programId}`} label={ellipsify(programId.toString())} />
         </p>
         <NotesolsCreate />

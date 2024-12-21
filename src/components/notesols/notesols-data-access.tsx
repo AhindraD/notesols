@@ -9,6 +9,13 @@ import toast from 'react-hot-toast'
 import { useCluster } from '../cluster/cluster-data-access'
 import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../ui/ui-layout'
+import { title } from 'process'
+
+interface CreateEntryArgs {
+  title: string,
+  message: string,
+  owner: PublicKey,
+}
 
 export function useNotesolsProgram() {
   const { connection } = useConnection()
@@ -16,11 +23,11 @@ export function useNotesolsProgram() {
   const transactionToast = useTransactionToast()
   const provider = useAnchorProvider()
   const programId = useMemo(() => getNotesolsProgramId(cluster.network as Cluster), [cluster])
-  const program = useMemo(() => getNotesolsProgram(provider, programId), [provider, programId])
+  const program = getNotesolsProgram(provider)
 
   const accounts = useQuery({
     queryKey: ['notesols', 'all', { cluster }],
-    queryFn: () => program.account.notesols.all(),
+    queryFn: () => program.account.noteEntryState.all(),
   })
 
   const getProgramAccount = useQuery({
@@ -28,23 +35,27 @@ export function useNotesolsProgram() {
     queryFn: () => connection.getParsedAccountInfo(programId),
   })
 
-  const initialize = useMutation({
-    mutationKey: ['notesols', 'initialize', { cluster }],
-    mutationFn: (keypair: Keypair) =>
-      program.methods.initialize().accounts({ notesols: keypair.publicKey }).signers([keypair]).rpc(),
-    onSuccess: (signature) => {
-      transactionToast(signature)
-      return accounts.refetch()
+  const createEntry = useMutation<String, Error, CreateEntryArgs>({
+    mutationKey: ["notesols", "create", { cluster }],
+    mutationFn: async ({ title, message }) => {
+      return program.methods.createNoteEntry(title, message).rpc();
     },
-    onError: () => toast.error('Failed to initialize account'),
+    onSuccess: (signature) => {
+      transactionToast(`${signature}`)
+      accounts.refetch()
+    },
+    onError: (error) => {
+      toast.error(`FAILED to create note: ${error.message}`)
+    }
   })
+
 
   return {
     program,
     programId,
     accounts,
     getProgramAccount,
-    initialize,
+    createEntry,
   }
 }
 
@@ -55,50 +66,42 @@ export function useNotesolsProgramAccount({ account }: { account: PublicKey }) {
 
   const accountQuery = useQuery({
     queryKey: ['notesols', 'fetch', { cluster, account }],
-    queryFn: () => program.account.notesols.fetch(account),
+    queryFn: () => program.account.noteEntryState.fetch(account),
   })
 
-  const closeMutation = useMutation({
-    mutationKey: ['notesols', 'close', { cluster, account }],
-    mutationFn: () => program.methods.close().accounts({ notesols: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx)
-      return accounts.refetch()
+  const updateEntry = useMutation<String, Error, CreateEntryArgs>({
+    mutationKey: ["notesols", "update", { cluster }],
+    mutationFn: async ({ title, message }) => {
+      return program.methods.updateNoteEntry(title, message).rpc();
     },
+    onSuccess: (signature) => {
+      transactionToast(`${signature}`)
+      accounts.refetch()
+    },
+
+    onError: (error) => {
+      toast.error(`FAILED to update note: ${error.message}`)
+    }
   })
 
-  const decrementMutation = useMutation({
-    mutationKey: ['notesols', 'decrement', { cluster, account }],
-    mutationFn: () => program.methods.decrement().accounts({ notesols: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx)
-      return accountQuery.refetch()
+  const deleteEntry = useMutation({
+    mutationKey: ["notesols", "delete", { cluster }],
+    mutationFn: async (title: string) => {
+      return program.methods.deleteNoteEntry(title).rpc();
     },
+    onSuccess: (signature) => {
+      transactionToast(signature)
+      accounts.refetch()
+    },
+    onError: (error) => {
+      toast.error(`FAILED to delete note: ${error.message}`)
+    }
   })
 
-  const incrementMutation = useMutation({
-    mutationKey: ['notesols', 'increment', { cluster, account }],
-    mutationFn: () => program.methods.increment().accounts({ notesols: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx)
-      return accountQuery.refetch()
-    },
-  })
-
-  const setMutation = useMutation({
-    mutationKey: ['notesols', 'set', { cluster, account }],
-    mutationFn: (value: number) => program.methods.set(value).accounts({ notesols: account }).rpc(),
-    onSuccess: (tx) => {
-      transactionToast(tx)
-      return accountQuery.refetch()
-    },
-  })
 
   return {
     accountQuery,
-    closeMutation,
-    decrementMutation,
-    incrementMutation,
-    setMutation,
+    updateEntry,
+    deleteEntry,
   }
 }
